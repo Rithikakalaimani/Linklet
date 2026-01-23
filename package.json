@@ -11,7 +11,7 @@
     "install-all": "npm install && cd client && npm install",
     "kill-port": "lsof -ti:5002 | xargs kill -9 2>/dev/null || echo 'No process on port 5002'",
     "start-clean": "npm run kill-port && npm run dev",
-    "vercel-build": "npm run build"
+    "vercel-build": "cd client && npm install && npm run build"
   },
   "keywords": [
     "url-shortener",
