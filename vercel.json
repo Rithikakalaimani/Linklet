@@ -29,7 +29,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api|health|static|.*\\.).*)",
       "destination": "/index.html"
     }
   ]
