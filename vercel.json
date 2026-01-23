@@ -25,18 +25,12 @@
     {
       "src": "/([a-zA-Z0-9_-]{3,20})$",
       "dest": "server/index.js"
-    },
+    }
+  ],
+  "rewrites": [
     {
-      "src": "/static/(.*)",
-      "dest": "client/build/static/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json|woff|woff2|ttf|eot))",
-      "dest": "client/build/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "client/build/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

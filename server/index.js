@@ -105,8 +105,9 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Serve React app for all non-API routes (only in production/Vercel)
-if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+// Note: In Vercel, static files and React routing are handled by vercel.json
+// This Express middleware is only for local development
+if ((process.env.NODE_ENV === 'production' || process.env.VERCEL) && !process.env.VERCEL) {
   const path = require('path');
   // Serve static files from React build
   app.use(express.static(path.join(__dirname, '../client/build')));
