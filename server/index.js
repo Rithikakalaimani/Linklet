@@ -105,6 +105,27 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Serve React app for all non-API routes (only in production/Vercel)
+if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+  const path = require('path');
+  // Serve static files from React build
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  
+  // Handle React routing - return all non-API requests to React app
+  app.get('*', (req, res, next) => {
+    // Skip API routes and short code redirects
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    // Check if it's a short code (3-20 alphanumeric chars)
+    if (/^\/[a-zA-Z0-9_-]{3,20}$/.test(req.path)) {
+      return next(); // Let the redirect handler process it
+    }
+    // Serve React app for all other routes
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -114,7 +135,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
+// Start server (only if not in Vercel/serverless environment)
 const startServer = async () => {
   try {
     // Try to connect to databases, but don't fail if they're not available
@@ -140,6 +161,11 @@ const startServer = async () => {
   }
 };
 
-startServer();
+// Only start server if not in Vercel/serverless environment
+// In Vercel, the app is exported and handled by serverless functions
+if (!process.env.VERCEL && !process.env.VERCEL_ENV) {
+  startServer();
+}
 
+// Export app for Vercel serverless functions
 module.exports = app;
