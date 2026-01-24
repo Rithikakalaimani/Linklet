@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { downloadQRCode } from '../services/api';
 import UrlActions from './UrlActions';
 
+// Download icon - using SVG placeholder until PNG is available
+const DownloadIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+);
+
 const UrlResult = ({ shortCode, shortUrl, originalUrl, expiresAt, qrCodeUrl }) => {
   const [showQR, setShowQR] = useState(false);
   const [qrLoading, setQrLoading] = useState(true);

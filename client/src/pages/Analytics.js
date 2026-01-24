@@ -6,17 +6,16 @@ import VisitsChart from '../components/VisitsChart';
 import AnalyticsPieChart from '../components/AnalyticsPieChart';
 import LocationMap from '../components/LocationMap';
 import { parseUserAgent } from '../utils/userAgentParser';
-import clickIcon from '../icons/click.png';
-import visitorIcon from '../icons/visitor.png';
-import createdIcon from '../icons/created.png';
-import lastIcon from '../icons/last.png';
-
 // Download icon - using SVG placeholder until PNG is available
 const DownloadIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
   </svg>
 );
+import clickIcon from '../icons/click.png';
+import visitorIcon from '../icons/visitor.png';
+import createdIcon from '../icons/created.png';
+import lastIcon from '../icons/last.png';
 
 const Analytics = () => {
   const { shortCode } = useParams();
@@ -76,6 +75,7 @@ const Analytics = () => {
   const clicksByOS = analytics.clicksByOS || {};
   const clicksByDevice = analytics.clicksByDevice || {};
   const clicksByCountry = analytics.clicksByCountry || {};
+  const clicksByRegion = analytics.clicksByRegion || {};
   const recentClicks = analytics.clicks?.slice(-3).reverse() || [];
   const visitsAndVisitorsByDay = analytics.visitsAndVisitorsByDay || {};
   const uniqueVisitors = analytics.uniqueVisitors || 0;

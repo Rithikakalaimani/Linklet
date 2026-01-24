@@ -1,0 +1,28 @@
+# Netlify configuration for frontend deployment
+[build]
+  # Build command for React app
+  command = "cd client && npm install && npm run build"
+  # Directory where the built files will be
+  publish = "client/build"
+  
+  # Environment variables (set these in Netlify dashboard)
+  # [build.environment]
+  #   REACT_APP_API_URL = "https://your-backend-url.com/api"
+  #   REACT_APP_BASE_URL = "https://your-backend-url.com"
+  #   REACT_APP_SUPABASE_URL = "your-supabase-url"
+  #   REACT_APP_SUPABASE_ANON_KEY = "your-supabase-anon-key"
+
+# Redirect rules for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

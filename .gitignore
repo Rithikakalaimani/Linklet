@@ -13,4 +13,3 @@ build/
 # Exclude all markdown documentation files
 *.md
 !README.md
-.vercel
