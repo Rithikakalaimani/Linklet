@@ -6,6 +6,11 @@ import VisitsChart from "../components/VisitsChart";
 import AnalyticsPieChart from "../components/AnalyticsPieChart";
 import LocationMap from "../components/LocationMap";
 import { parseUserAgent } from "../utils/userAgentParser";
+import clickIcon from "../icons/click.png";
+import visitorIcon from "../icons/visitor.png";
+import createdIcon from "../icons/created.png";
+import lastIcon from "../icons/last.png";
+
 // Download icon - using SVG placeholder until PNG is available
 const DownloadIcon = () => (
   <svg
@@ -22,10 +27,6 @@ const DownloadIcon = () => (
     />
   </svg>
 );
-import clickIcon from "../icons/click.png";
-import visitorIcon from "../icons/visitor.png";
-import createdIcon from "../icons/created.png";
-import lastIcon from "../icons/last.png";
 
 const Analytics = () => {
   const { shortCode } = useParams();
