@@ -9,8 +9,7 @@
   # [build.environment]
   #   REACT_APP_API_URL = "https://your-backend-url.com/api"
   #   REACT_APP_BASE_URL = "https://your-backend-url.com"
-  #   REACT_APP_SUPABASE_URL = "your-supabase-url"
-  #   REACT_APP_SUPABASE_ANON_KEY = "your-supabase-anon-key"
+  #   REACT_APP_FIREBASE_API_KEY = "your-firebase-api-key" (optional; defaults in code)
 
 # Redirect rules for React Router
 [[redirects]]

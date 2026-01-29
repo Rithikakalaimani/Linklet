@@ -1,38 +1,34 @@
-const { supabaseClient } = require('../config/supabase');
+const { getAuth } = require("../config/firebaseAdmin");
 
 /**
- * Middleware to verify JWT token from Supabase
+ * Middleware to verify Firebase ID token (Bearer token from client)
  */
 const authenticateUser = async (req, res, next) => {
   try {
-    // Check if Supabase is configured
-    if (!supabaseClient || !process.env.SUPABASE_URL) {
-      console.warn('Supabase not configured, skipping authentication');
-      return res.status(401).json({ error: 'Authentication not configured' });
+    const firebaseAuth = getAuth();
+    if (!firebaseAuth) {
+      return res.status(401).json({ error: "Authentication not configured" });
     }
 
     const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'No token provided' });
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "No token provided" });
     }
 
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
+    const decodedToken = await firebaseAuth.verifyIdToken(token);
 
-    // Verify the token with Supabase
-    const { data: { user }, error } = await supabaseClient.auth.getUser(token);
-
-    if (error || !user) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
-    }
-
-    // Attach user to request
-    req.user = user;
-    req.userId = user.id;
+    // Attach user to request (Firebase uses uid; backend expects userId)
+    req.user = {
+      id: decodedToken.uid,
+      uid: decodedToken.uid,
+      email: decodedToken.email || null,
+    };
+    req.userId = decodedToken.uid;
     next();
   } catch (error) {
-    console.error('Authentication error:', error);
-    res.status(401).json({ error: 'Authentication failed' });
+    console.error("Authentication error:", error.message);
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 };
 
@@ -41,32 +37,30 @@ const authenticateUser = async (req, res, next) => {
  */
 const optionalAuth = async (req, res, next) => {
   try {
-    // Check if Supabase is configured
-    if (!supabaseClient || !process.env.SUPABASE_URL) {
-      // Continue without authentication if Supabase is not configured
+    const firebaseAuth = getAuth();
+    if (!firebaseAuth) {
       return next();
     }
 
     const authHeader = req.headers.authorization;
-    
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.split(' ')[1];
-      try {
-        const { data: { user }, error } = await supabaseClient.auth.getUser(token);
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return next();
+    }
 
-        if (!error && user) {
-          req.user = user;
-          req.userId = user.id;
-        }
-      } catch (tokenError) {
-        // If token verification fails, continue without authentication
-        console.warn('Token verification failed:', tokenError.message);
-      }
+    const token = authHeader.split(" ")[1];
+    try {
+      const decodedToken = await firebaseAuth.verifyIdToken(token);
+      req.user = {
+        id: decodedToken.uid,
+        uid: decodedToken.uid,
+        email: decodedToken.email || null,
+      };
+      req.userId = decodedToken.uid;
+    } catch (tokenError) {
+      console.warn("Token verification failed:", tokenError.message);
     }
     next();
   } catch (error) {
-    // Continue without authentication on any error
-    console.warn('Optional auth error:', error.message);
     next();
   }
 };

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { supabase } from "../config/supabase";
+import { auth } from "../config/firebase";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_URL ||
@@ -14,18 +14,18 @@ const api = axios.create({
   },
 });
 
-// Add auth token to requests
+// Add Firebase ID token to requests
 api.interceptors.request.use(async (config) => {
   try {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (session?.access_token) {
-      config.headers.Authorization = `Bearer ${session.access_token}`;
+    const user = auth.currentUser;
+    if (user) {
+      const token = await user.getIdToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
   } catch (error) {
-    // If Supabase is not configured, continue without auth token
-    console.warn("Failed to get session:", error.message);
+    console.warn("Failed to get Firebase token:", error.message);
   }
   return config;
 });

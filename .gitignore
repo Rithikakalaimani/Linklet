@@ -10,6 +10,9 @@ build/
 .env.test.local
 .env.production.local
 
+# Firebase service account key (never commit)
+server/*-firebase-adminsdk-*.json
+
 # Exclude all markdown documentation files
 *.md
 !README.md

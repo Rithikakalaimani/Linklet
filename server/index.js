@@ -13,6 +13,9 @@ const urlService = require("./services/urlService");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy (required when behind Railway/nginx - fixes express-rate-limit X-Forwarded-For)
+app.set("trust proxy", 1);
+
 // Security middleware - configure helmet to allow images
 app.use(
   helmet({
@@ -22,8 +25,8 @@ app.use(
   }),
 );
 // Normalize frontend URL (remove trailing slash)
-const frontendUrl = process.env.FRONTEND_URL 
-  ? process.env.FRONTEND_URL.replace(/\/$/, '') 
+const frontendUrl = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.replace(/\/$/, "")
   : "http://localhost:3000";
 
 app.use(
