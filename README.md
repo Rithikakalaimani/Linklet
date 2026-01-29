@@ -28,18 +28,13 @@ A production-ready URL shortener with auth, analytics, QR codes, and caching. Bu
 
 ## Screenshots
 
-| | |
-|---|---|
-| ![Login](screenshots/Screenshot%202026-01-29%20at%202.44.30%20PM.png) | ![Sign up](screenshots/Screenshot%202026-01-29%20at%202.44.44%20PM.png) |
-| *Login* | *Sign up* |
-| ![Home](screenshots/Screenshot%202026-01-29%20at%202.45.04%20PM.png) | ![Dashboard](screenshots/Screenshot%202026-01-29%20at%202.45.20%20PM.png) |
-| *Home* | *Dashboard* |
-| ![Analytics](screenshots/Screenshot%202026-01-29%20at%202.45.31%20PM.png) | ![Analytics map](screenshots/Screenshot%202026-01-29%20at%204.35.47%20PM.png) |
-| *Analytics* | *Analytics – map* |
 
-*(If images don’t load in your viewer, open the files in `screenshots/` directly.)*
-
----
+![Home](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%204.35.47%E2%80%AFPM.png) 
+![dashoard](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%202.44.30%E2%80%AFPM.png) 
+![visits](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%202.44.44%E2%80%AFPM.png) 
+![Pie](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%202.45.04%E2%80%AFPM.png)
+![Location](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%202.45.20%E2%80%AFPM.png) 
+![Qrcode](https://github.com/Rithikakalaimani/Linklet/blob/main/screenshots/Screenshot%202026-01-29%20at%202.45.31%E2%80%AFPM.png) 
 
 ## Run locally
 
