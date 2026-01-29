@@ -90,7 +90,6 @@ const Analytics = () => {
   const clicksByOS = analytics.clicksByOS || {};
   const clicksByDevice = analytics.clicksByDevice || {};
   const clicksByCountry = analytics.clicksByCountry || {};
-  const clicksByRegion = analytics.clicksByRegion || {};
   const recentClicks = analytics.clicks?.slice(-3).reverse() || [];
   const visitsAndVisitorsByDay = analytics.visitsAndVisitorsByDay || {};
   const uniqueVisitors = analytics.uniqueVisitors || 0;
