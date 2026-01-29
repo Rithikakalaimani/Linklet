@@ -8,21 +8,35 @@ A production-ready URL shortener with auth, analytics, QR codes, and caching. Bu
 
 ## Tech stack
 
-- **Backend:** Node.js, Express, MongoDB (Mongoose), Redis, Firebase Admin
-- **Frontend:** React, Tailwind CSS, React Router, Firebase Auth
+- **Backend:** Node.js, Express, MongoDB, Redis, Firebase Admin
+- **Frontend:** React, Tailwind CSS, Axios, React Router, Firebase Auth
 - **Deploy:** Frontend on Netlify, backend on Railway
 
 ---
-
 ## Features
 
-- **Auth** – Sign up / Sign in with Firebase (email & password). Home, Dashboard, and Analytics require login.
-- **Shorten URLs** – Paste a long URL, get a short link. Optional custom alias and expiration.
-- **QR codes** – Generate and download QR codes for any short link.
-- **Analytics** – Clicks, unique visitors, browsers, OS, devices, countries, referrers, time-series charts, map.
-- **Dashboard** – List your short URLs, copy/delete/QR/analytics per link; overall stats when logged in.
-- **Caching** – Redis cache for redirects and QR codes; MongoDB indexes for read-heavy workload.
-- **Security** – Rate limiting, Helmet, URL validation, trust proxy for Railway.
+### Authentication
+- Sign up and sign in with **Firebase** (email/password)
+- Protected routes: Home, Dashboard, and Analytics require login
+- Forgot password flow
+- Header shows Sign In / Sign Up when logged out; Home, Dashboard, Sign Out when logged in
+
+### URL Shortening
+- Paste a long URL and get a short link (Base62 encoding)
+- Optional **custom alias** (3–20 characters)
+- Optional **expiration** (TTL in days)
+- Copy short URL, delete link, generate/download **QR code** per link
+
+### Analytics
+- **Per-link:** total clicks, unique visitors, clicks by day, browser, OS, device, country, referrer
+- **Dashboard:** overall stats when logged in; list of your short URLs with actions
+- Time-series charts and world map (Recharts, react-simple-maps)
+- User-agent and geo parsing for devices and locations
+
+### Backend & Performance
+- **MongoDB** for URLs and analytics; **Redis** for caching redirects and QR codes
+- Rate limiting, Helmet, CORS, URL validation
+- Trust proxy for Railway; Firebase Admin for token verification
 
 ---
 
