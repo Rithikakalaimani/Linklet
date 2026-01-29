@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth, getAuthErrorMessage } from "../contexts/AuthContext";
 import logoIcon from "../icons/logo.png";
 
@@ -8,7 +8,22 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const { resetPassword } = useAuth();
+  const { resetPassword, user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, authLoading, navigate]);
+
+  if (authLoading) {
+    return (
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500'></div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

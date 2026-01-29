@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/");
+    navigate("/login");
     setMobileMenuOpen(false);
   };
 
@@ -22,9 +22,13 @@ const Navbar = () => {
     <nav className='bg-gray-900 border-b border-gray-800'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between h-16'>
-          {/* Logo */}
+          {/* Logo - links to Home when logged in, Login when not */}
           <div className='flex items-center'>
-            <Link to='/' className='flex items-center space-x-2 group' onClick={closeMobileMenu}>
+            <Link
+              to={user ? '/' : '/login'}
+              className='flex items-center space-x-2 group'
+              onClick={closeMobileMenu}
+            >
               <img
                 src={logoIcon}
                 alt='URL Shortener Logo'
@@ -34,36 +38,38 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - only app links when logged in; only auth links when not */}
           <div className='hidden md:flex items-center space-x-4'>
-            <Link
-              to='/'
-              className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
-            >
-              Home
-            </Link>
-            <Link
-              to='/dashboard'
-              className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
-            >
-              Dashboard
-            </Link>
             {!loading && (
               <>
                 {user ? (
-                  <button
-                    onClick={handleSignOut}
-                    className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
-                  >
-                    Sign Out
-                  </button>
+                  <>
+                    <Link
+                      to='/'
+                      className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to='/dashboard'
+                      className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
+                    >
+                      Sign Out
+                    </button>
+                  </>
                 ) : (
                   <>
                     <Link
                       to='/login'
                       className='text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:scale-110 hover:translate-y-[-2px]'
                     >
-                      Login
+                      Sign In
                     </Link>
                     <Link
                       to='/signup'
@@ -97,33 +103,35 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Mobile Navigation Menu - same logic as desktop */}
         {mobileMenuOpen && (
           <div className='md:hidden border-t border-gray-800'>
             <div className='px-2 pt-2 pb-3 space-y-1'>
-              <Link
-                to='/'
-                onClick={closeMobileMenu}
-                className='block text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
-              >
-                Home
-              </Link>
-              <Link
-                to='/dashboard'
-                onClick={closeMobileMenu}
-                className='block text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
-              >
-                Dashboard
-              </Link>
               {!loading && (
                 <>
                   {user ? (
-                    <button
-                      onClick={handleSignOut}
-                      className='w-full text-left text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
-                    >
-                      Sign Out
-                    </button>
+                    <>
+                      <Link
+                        to='/'
+                        onClick={closeMobileMenu}
+                        className='block text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
+                      >
+                        Home
+                      </Link>
+                      <Link
+                        to='/dashboard'
+                        onClick={closeMobileMenu}
+                        className='block text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className='w-full text-left text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
+                      >
+                        Sign Out
+                      </button>
+                    </>
                   ) : (
                     <>
                       <Link
@@ -131,7 +139,7 @@ const Navbar = () => {
                         onClick={closeMobileMenu}
                         className='block text-gray-300 hover:text-primary-400 hover:bg-gray-800 px-3 py-2 rounded-md text-base font-medium transition-colors'
                       >
-                        Login
+                        Sign In
                       </Link>
                       <Link
                         to='/signup'
